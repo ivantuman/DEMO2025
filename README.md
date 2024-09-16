@@ -17,3 +17,6 @@
 |BR-SRV          |2             |1     |10              |ALT Linux Server       |                
 |HQ-CLI          |3             |2     |15              |ALT Linux Workstation  |                
 |Итого           |10            |7     |65              |-                      |        
+
+
+**Таблица IP-адресов**
