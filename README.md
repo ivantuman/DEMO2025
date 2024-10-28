@@ -10,9 +10,9 @@
 
 |Машина          |RAM, Гб       | CPU  |HDD/SSD, Гб     |Шаблон                 |
 |  ------------- | ------------ | -----| -------------  |  ---------------------|
-|ISP             |1             |1     |10              |ALT Linux Server       |
+|ISP             |1             |1     |10              |Vesr       |
 |HQ-RTR          |1             |1     |10              |EcoRouter              |                 
-|BR-RTR          |1             |1     |10              |EcoRouter              |                
+|BR-RTR          |1             |1     |10              |Vesr              |                
 |HQ-SRV          |2             |1     |10              |ALT Linux Server       |                
 |BR-SRV          |2             |1     |10              |ALT Linux Server       |                
 |HQ-CLI          |3             |2     |15              |ALT Linux Workstation  |                
