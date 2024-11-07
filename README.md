@@ -488,3 +488,50 @@ zone "au-team.irpo" {
         file "au-team.irpo.db";
 };
 ```
+![image](https://github.com/user-attachments/assets/cc43f220-d708-4275-a7d4-318ba1c60649)
+
+Создаем копию файла-шаблона прямой зоны
+```
+# cp /var/lib/bind/etc/zone/localdomain  /var/lib/bind/etc/zone/au-team.irpo.db
+```
+Задаём права на файл
+```
+chown named. /var/lib/bind/etc/zone/au-team.irpo.db
+
+chmod 600 /var/lib/bind/etc/zone/au-team.irpo.db
+```
+Открываем файл и прописываем в нём следующее:
+```
+nano /var/lib/bind/etc/zone/au-team.irpo.db
+```
+```
+$TTL    1D
+@       IN      SOA     au-team.irpo. root.au-team.irpo. (
+                                2024102200      ; serial
+                                12H             ; refresh
+                                1H              ; retry
+                                1W              ; expire
+                                1H              ; ncache
+                        )
+        IN      NS      au-team.irpo.
+        IN      A       192.168.0.2
+hq-rtr  IN      A       192.168.0.1
+br-rtr  IN      A       192.168.1.1
+hq-srv  IN      A       192.168.0.2
+hq-cli  IN      A       192.168.0.66
+br-srv  IN      A       192.168.1.2
+moodle  IN      CNAME   hq-rtr
+wiki    IN      CNAME   hq-rtr
+```
+Проверяем правильность настройки зоны и перезагружаем bind
+```
+named-checkconf -z
+```
+![image](https://github.com/user-attachments/assets/4fa4189a-6144-4f83-bb44-51a46407ecde)
+```
+systemctl restart bind
+```
+И делаем проверку
+```
+dig hq-srv.au-team.irpo
+```
