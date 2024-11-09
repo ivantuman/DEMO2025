@@ -535,3 +535,55 @@ systemctl restart bind
 ```
 dig hq-srv.au-team.irpo
 ```
+![image](https://github.com/user-attachments/assets/0ad7ba95-0fc8-4cce-82a8-4c217ff5d532)
+
+### Создаем зону обратного просмотра
+Заходим в конфигурационный файл `/var/lib/bind/etc/local.conf` и вписываем следующее:
+
+```
+zone "0.168.192.in-addr.arpa" {
+        type master;
+        file "au-team.irpo_rev.db";
+};
+```
+![image](https://github.com/user-attachments/assets/b1c37d3f-9248-4c44-a7f8-928315f3d014)
+
+Копируем шаблон файла и задаём права 
+```
+cp /var/lib/bind/etc/zone/{127.in-addr.arpa,au-team.irpo_rev.db}
+```
+```
+chown named. /var/lib/bind/etc/zone/au-team.irpo_rev.db
+
+chmod 600 /var/lib/bind/etc/zone/au-team.irpo_rev.db
+```
+Открываем `/var/lib/bind/etc/zone/au-team.irpo_rev.db` и вписываем в него следующее
+```
+$TTL    1D
+@       IN      SOA     au-team.irpo. root.au-team.irpo. (
+                                2024102200      ; serial
+                                12H             ; refresh
+                                1H              ; retry
+                                1W              ; expire
+                                1H              ; ncache
+                        )
+        IN      NS      au-team.irpo.
+1       IN      PTR     hq-rtr.au-team.irpo.
+2       IN      PTR     hq-srv.au-team.irpo.
+66      IN      PTR     hq-cli.au-team.irpo.
+```
+Делаем проверку
+```
+named-checkconf -z
+```
+![image](https://github.com/user-attachments/assets/18ff2d5c-31bc-4037-8110-bc58fde5a899)
+
+Перезагружаем bind и проверяем
+```
+dig -x 192.168.0.2
+```
+![image](https://github.com/user-attachments/assets/cd06fc93-9009-4fa6-b0f2-18f382b6fb09)
+# Производим полную проверку с HQ-CLI
+![image](https://github.com/user-attachments/assets/f6c75cd5-786d-4b6a-84b0-c66631bc3895)
+
+
