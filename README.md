@@ -583,7 +583,33 @@ named-checkconf -z
 dig -x 192.168.0.2
 ```
 ![image](https://github.com/user-attachments/assets/cd06fc93-9009-4fa6-b0f2-18f382b6fb09)
-# Производим полную проверку с HQ-CLI
+## Производим полную проверку с HQ-CLI
 ![image](https://github.com/user-attachments/assets/f6c75cd5-786d-4b6a-84b0-c66631bc3895)
 
-
+# Настройка часовых поясов 
+На HQ-SRV, HQ-CLI, BR-SRV проверяем часовой пояс
+```
+timedatectl status
+```
+И меняем 
+```
+timedatectl set-timezone Asia/Yekaterinburg
+```
+На HQ-RTR 
+```
+conf t
+ntp timezone utc+5
+show ntp timezone
+```
+На BR-RTR
+```
+configure
+clock timezone gmt +5
+end
+commit
+confirm
+```
+И проверяем
+```
+show date
+```
